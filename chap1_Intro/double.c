@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 		FILE *fp = fopen(argv[i], "r");
 		if (fp == NULL){
 			fprintf(stderr, "%s can't open '%s' (%s)\n",
-				    argv[0], argv[i], strerror(errorno));
+				argv[0], argv[i], strerror(errorno));
 			return EXIT_FAILURE;
 		}
 		else {
@@ -36,22 +36,22 @@ int getword(File *fp, char *buf, int size){
 	int c;
 
 	c = getc(fp)
-    int linenum = 0;
+	int linenum = 0;
 	//<scan forward to nonspace char or EOF 6>
 	for(; c!= EOF && isspace(c); c = getc(fp))
 		if (c == '\n')
 			linenum ++;
 	//<copy the word into buf[0.. size -1] 7>
-	{
-		int i = 0; 
-		for ( ; c != EOF && !isspace(c); c = getc(fp))
-			if (i < size - 1)
-				buf[i++] = tolower(c);
-			if (i < size)
-				buf[i] = '\0';
-	}
-	if (c != EOF)
-		unget(c, fp);
+		{
+			int i = 0; 
+			for ( ; c != EOF && !isspace(c); c = getc(fp))
+				if (i < size - 1)
+					buf[i++] = tolower(c);
+				if (i < size)
+					buf[i] = '\0';
+			}
+			if (c != EOF)
+				unget(c, fp);
 	return buf[0] != '\0';//<found a word> 7>;
 }
 
