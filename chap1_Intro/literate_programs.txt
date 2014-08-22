@@ -1,0 +1,98 @@
+ A literate program is composed of English prose and labeled chunks
+ of program code
+
+-----------------------------
+ <compute x • y>≡    // defines a chunk names compute
+	sum = 0;
+
+	for (i = 0; i < n; i++)    // code computes the dot product of the arrays x and y
+        sum += x[i]*y[i];
+
+ ----------------------------- 
+
+ The above chunk can be used by referring to it in another code chunck:
+
+<function dotproduct>≡
+	int dotProduct(int x[], int y[], int n) {
+		int i, sum;
+		<compute x • y>
+		return sum;
+	}
+ ----------------------------- 
+
+ A literate program can be presented in small pieces and documented thoroughly.
+
+ A complete example of literate C  program will be showcased describing double
+ double -> program that detects adjacent identitical words in its input
+
+ > double intro.txt inter.txt
+ intro.txt:10: the      // the occurs twice in the file intro.txt , second appearance at line 10
+ inter.txt:110: interface
+ inter.txt:410: type
+ inter.txt:611: if
+ ----------------------------- 
+Design of double by defining a root chunk which uses other chuncks/modules for programs components
+
+ <double.c 4>≡    //program's file name, 4 is the page number(book reference) where definition of chunck begins
+ 	<include 5>
+ 	<data 6>
+ 	<prototypes 6>
+ 	<functions 5>
+
+ <functions 5>≡
+ 	int main(int argc, char *argv[])
+{
+	int i;
+
+	for(i=1; i< argc; i++){
+		FILE *fp = fopen(argv[i], "r");
+		if (fp == NULL){
+			fprintf(stderr, "%s can't open '%s' (%s)\n",
+				    argv[0], argv[i], strerror(errorno));
+			return EXIT_FAILURE;
+		}
+		else {
+			doubleword(argv[i], fp);
+			fclose(fp);
+		}
+	}
+	if (argc == 1) doubleword(NULL, stdin);
+	return EXIT_SUCCESS;
+}
+
+<include 5>≡
+	#include <stdio.h>
+	#include <stdlib.h>
+	#include <errno.h>
+
+<function 5>+=   // Indicates the code for getword is appended to the code for chunk <function 5>
+	int getword(File *fp, char *buf, int size){
+	int c;
+
+	c = getc(fp)
+	//<scan forward to nonspace char or EOF 6>
+
+	//<copy the word into buf[0.. size -1] 7>
+	if (c != EOF)
+		unget(c, fp);
+	return <found a word? 7>;
+}
+
+<prototypes 6>=    // similar to C's declaration before use rune
+	int getword(FILE *, char *, int);
+
+
+<data 6>=
+  int linenum;
+
+<scan forward to a non space character or EOF 6>=
+	for(; c!= EOF && isspace(c); c = getc(fp))
+		if (c == '\n')
+			linenum ++;
+
+<include 5>=
+#include <ctype.h>			  
+
+<found a word? 7>
+buf[0] != '\0';
+      

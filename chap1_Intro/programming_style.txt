@@ -1,0 +1,42 @@
+
+Conventions for C:
+> Consistent convention of naming variables
+>  similar for types and routines
+> Useful to maximize readabulity and understanding.
+>
+
+Variable names are declared near their first use or in chuncks
+Locals are declared at the beginning of compound statment in which they are used, when possible.
+
+Naming convention for procedures and functions:
+reflect what the prodecures do and what the function returns.
+
+getword -> returns next word
+doubleword -> find and announces words that occur two or more times
+
+Comments :
+used to explain details of data structure
+Exception conditions
+
+Literate programming encourages:
+accuracy
+precision
+clarity
+
+idiomatic C example:
+
+char *strcpy(char *dst, const char *src){
+	char *s = dst;
+	while (*dst++ = *src++)
+		;
+	return s;
+}
+
+
+EFFICIENCY:
+
+
+A program only needs to be fast enough.
+
+Tuning program introduces error, makes it bigger.
+Reliability is more important than efficiency.
